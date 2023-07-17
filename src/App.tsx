@@ -1,31 +1,77 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// import { useState } from 'react'
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg'
+// import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+// function App() {
+//   const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+//   return (
+//     <>
+//       <div>
+//         <a href="https://vitejs.dev" target="_blank">
+//           <img src={viteLogo} className="logo" alt="Vite logo" />
+//         </a>
+//         <a href="https://react.dev" target="_blank">
+//           <img src={reactLogo} className="logo react" alt="React logo" />
+//         </a>
+//       </div>
+//       <h1>Vite + React</h1>
+//       <div className="card">
+//         <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
+//         <p>
+//           Edit <code>src/App.tsx</code> and save to test HMR
+//         </p>
+//       </div>
+//       <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+//     </>
+//   )
+// }
+
+//import React from 'react'
+import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+//import SideMenu from './components/SideMenu'
+import SideMenuLayout from './layouts/SideMenuLayout'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <SideMenuLayout/>,
+    children: [
+    {
+    path: '/',
+    element: (
+      <div style={{ display: 'flex' }}>
+
+        <h1>Home</h1>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      ),
+    },
+    {
+    path: 'task-list',
+    element: (
+      <div style={{ display: 'flex' }}>
+        
+        <h1>Task List</h1>
       </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
-  )
+      ),
+    },
+    {
+    path: 'task-progress',
+    element: (
+      <div style={{ display: 'flex' }}>
+        
+        <h1>Task Progress</h1>
+      </div>
+      ),
+    }
+    ],
+    
+  },
+])
+
+function App(): JSX.Element {
+  return <RouterProvider router={router} />
 }
 
 export default App
