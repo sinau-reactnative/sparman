@@ -25,7 +25,7 @@ const SideMenu = (): JSX.Element => {
         to="/task-progress"
         style={({ isActive }) => (isActive ? styles.activeLink : styles.link)}
       >
-        <span className="material-icons" style={styles.icon}>done</span>
+        <span className="material-icons" style={styles.icon}>check_box</span>
         <p style={styles.text}>Task Progress</p>
       </NavLink>
     </div>

@@ -1,9 +1,12 @@
+import React from "react"
 import SideMenu from "../components/SideMenu"
+import { Outlet } from "react-router-dom"
 
-const SideMenuLayout = () => {
+const SideMenuLayout = (): JSX.Element => {
     return (
-        <div>
+        <div style={{ display: 'flex'}}>
             <SideMenu/>
+            <Outlet/>
         </div>
     )
 }
