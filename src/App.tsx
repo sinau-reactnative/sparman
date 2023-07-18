@@ -34,8 +34,8 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import SideMenuLayout from './layouts/SideMenuLayout'
 import { RecoilRoot } from 'recoil'
 import TaskSummary from './features/components/TaskSummary'
-//import TaskSummary from './feature/tasks/components/TaskLists'
-//import TaskSummary from './feature/tasks/components/TaskProgress'
+import TaskList from './features/components/TaskList/TaskList'
+import TaskProgress from './features/components/TaskProgress/TaskProgress'
 
 const router = createBrowserRouter([
   {
@@ -52,11 +52,11 @@ const router = createBrowserRouter([
     },
     {
     path: 'task-list',
-    //element: <TaskList />,
+    element: <TaskList />,
     },
     {
     path: 'task-progress',
-   // element: <TaskProgress />,
+    element: <TaskProgress />,
     }
     ],
     
