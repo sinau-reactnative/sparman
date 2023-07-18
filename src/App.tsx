@@ -28,42 +28,35 @@
 //   )
 // }
 
-//import React from 'react'
+import React from 'react'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 //import SideMenu from './components/SideMenu'
 import SideMenuLayout from './layouts/SideMenuLayout'
+import { RecoilRoot } from 'recoil'
+import TaskSummary from './features/components/TaskSummary'
+//import TaskSummary from './feature/tasks/components/TaskLists'
+//import TaskSummary from './feature/tasks/components/TaskProgress'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <SideMenuLayout/>,
+    element: (
+      <div>
+        <SideMenuLayout/>
+      </div>
+    ),
     children: [
     {
     path: '/',
-    element: (
-      <div style={{ display: 'flex' }}>
-
-        <h1>Home</h1>
-      </div>
-      ),
+    element: <TaskSummary />,
     },
     {
     path: 'task-list',
-    element: (
-      <div style={{ display: 'flex' }}>
-        
-        <h1>Task List</h1>
-      </div>
-      ),
+    //element: <TaskList />,
     },
     {
     path: 'task-progress',
-    element: (
-      <div style={{ display: 'flex' }}>
-        
-        <h1>Task Progress</h1>
-      </div>
-      ),
+   // element: <TaskProgress />,
     }
     ],
     
@@ -71,7 +64,11 @@ const router = createBrowserRouter([
 ])
 
 function App(): JSX.Element {
-  return <RouterProvider router={router} />
+  return (
+    <RecoilRoot>
+      <RouterProvider router={router} />
+    </RecoilRoot>
+  )
 }
 
 export default App
