@@ -1,8 +1,6 @@
 import React from 'react'
 import type { Task, CSSProperties } from '../../../types'
 import {TASK_PROGRESS_ID} from '../../../constants/app'
-//import { useRecoilState } from 'recoil'  // Ditambahkan
-//import { tasksState } from '../../TaskAtoms'  // Ditambahkan
 import {useTasksAction} from '../../hooks/Tasks'
 
 
@@ -36,17 +34,7 @@ const getArrowPositionStyle = (progressOrder: number): React.CSSProperties => {
 }
 
 const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
-  // const [tasks, setTasks] = useRecoilState<Task[]>(tasksState)
-  // const completeTask = (taskId: number): void => {
-  //   const updatedTasks: Task[] = tasks.map((task) =>
-  //     task.id === taskId
-  //       ? { ...task, progressOrder: TASK_PROGRESS_ID.COMPLETED }
-  //       : task,
-  //   )
-  //   setTasks(updatedTasks)
-  // }
-  const {completeTask} = useTasksAction()
-  const {moveTaskCard} = useTasksAction()
+  const {completeTask,moveTaskCard} = useTasksAction()
 
   return (
     <div style={styles.taskCard}>
@@ -55,7 +43,7 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
         className="material-icons"
         style={getIconStyle(task.progressOrder)}
         onClick={(): void => {
-          completeTask(task.id) // Ditambahkan
+          completeTask(task.id)
         }}
         >check_circle</div>
         <div className="material-icons" style={styles.menuIcon}>
@@ -73,15 +61,14 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
         {task.progressOrder !== TASK_PROGRESS_ID.NOT_STARTED && (
           <button className="material-icons"
           onClick={(): void => {
-            //console.log(task.progressOrder)
-            moveTaskCard(task.id, -1 ) // Ditambahkan
+            moveTaskCard(task.id, -1 )
           }}
           >chevron_left</button>
         )}
         {task.progressOrder !== TASK_PROGRESS_ID.COMPLETED && (
           <button className="material-icons"
           onClick={(): void => {
-            moveTaskCard(task.id, 1 ) // Ditambahkan
+            moveTaskCard(task.id, 1 )
           }}
           >chevron_right</button>
         )}
