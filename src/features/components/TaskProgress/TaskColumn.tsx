@@ -28,7 +28,7 @@ const TaskColumn = ({ columnTitle, tasks }: TaskColumnProps): JSX.Element => {
       </div>
       <div>
         {tasks.map((task: Task) => {
-          console.log(task.progressOrder)
+          //console.log(task.progressOrder)
           return <TaskCard key={task.id} task={task} />
         })}
       </div>

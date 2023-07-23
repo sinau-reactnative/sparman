@@ -26,14 +26,17 @@ const TaskForm = ({
     defaultProgressOrder,
   )
 
-  const { addTask } = useTasksAction()
+  const { addTask,  } = useTasksAction()
 
   const handleSubmit = (): void => {
     if (type === TASK_MODAL_TYPE.ADD) {
-      // Jalankan function addTask di sini
       addTask(title, detail, dueDate, progressOrder)
       setIsModalOpen(false)
-    }
+    } 
+    // else if (type === TASK_MODAL_TYPE.EDIT) {
+    //   editTask(title, detail, dueDate, progressOrder)
+    //   setIsModalOpen(false)
+    // }
   }
 
   return (

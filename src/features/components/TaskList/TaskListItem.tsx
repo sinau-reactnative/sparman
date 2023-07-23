@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import type { Task, CSSProperties } from '../../../types'
 import {
   TASK_PROGRESS_STATUS,
   TASK_PROGRESS_ID,
 } from '../../../constants/app'
-//import { useRecoilState } from 'recoil'  // Ditambahkan
-//import { tasksState } from '../../TaskAtoms'  // Ditambahkan
 import {useTasksAction} from '../../hooks/Tasks'
+import TaskMenu from '../shared/TaskMenu'
 
 interface TaskListItemProps {
   task: Task
@@ -43,16 +42,8 @@ const getProgressCategory = (progressOrder: number): string => {
 }
 
 const TaskListItem = ({ task }: TaskListItemProps): JSX.Element => {
-  // const [tasks, setTasks] = useRecoilState<Task[]>(tasksState)
-  // const completeTask = (taskId: number): void => {
-  //   const updatedTasks: Task[] = tasks.map((task) =>
-  //     task.id === taskId
-  //       ? { ...task, progressOrder: TASK_PROGRESS_ID.COMPLETED }
-  //       : task,
-  //   )
-  //   setTasks(updatedTasks)
-  // }
   const {completeTask} = useTasksAction()
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
 
   return (
     <div style={styles.tableBody}>
@@ -61,22 +52,28 @@ const TaskListItem = ({ task }: TaskListItemProps): JSX.Element => {
         className="material-icons"
         style={getIconStyle(task.progressOrder)}
         onClick={(): void => {
-          completeTask(task.id) // Ditambahkan
+          completeTask(task.id)
         }}
         >check_circle</span>
         {task.title}
       </div>
       <div style={styles.tableBodyDetail}>{task.detail}</div>
       <div style={styles.tableBodyDueDate}>{task.dueDate}</div>
-      {/* <div style={styles.tableBodyprogress}>{task.progressOrder}</div> */}
       <div style={styles.tableBodyprogress}>
         {getProgressCategory(task.progressOrder)}
       </div>
       <div>
-        <span className="material-icons" style={styles.menuIcon}>
+        <span 
+        className="material-icons" 
+        style={styles.menuIcon}
+        onClick={(): void => {
+          setIsMenuOpen(true) // Ditambahkan
+        }}
+        >
           more_horiz
         </span>
       </div>
+      {isMenuOpen && <TaskMenu setIsMenuOpen={setIsMenuOpen} />}
     </div>
   )
 }
