@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from 'react'
 import type { CSSProperties, Task } from '../../../types'
 import {TASK_MODAL_TYPE} from '../../../constants/app'
 import TaskModal from './TaskModal'
+import { useTasksAction } from '../../hooks/Tasks'
 
 
 interface TaskMenuProps {
@@ -14,6 +15,7 @@ interface TaskMenuProps {
 const TaskMenu = ({ setIsMenuOpen, task }: TaskMenuProps): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [type, setType] = useState<string>(TASK_MODAL_TYPE.ADD)
+  const {deleteTask} = useTasksAction()
   return (
     <div style={styles.menu}>
       <div 
@@ -25,7 +27,12 @@ const TaskMenu = ({ setIsMenuOpen, task }: TaskMenuProps): JSX.Element => {
       >
         <span className="material-icons">edit</span>Edit
       </div>
-      <div style={styles.menuItem}>
+      <div 
+      style={styles.menuItem}
+      onClick={(): void => {
+        deleteTask(task.id) // Ditambahkan
+      }}
+      >
         <span className="material-icons">delete</span>Delete
       </div>
       <span

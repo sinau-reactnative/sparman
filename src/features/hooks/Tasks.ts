@@ -59,9 +59,10 @@ export const useTasksAction = (): useTaskActionType => {
   }
 
   const deleteTask = (taskId: number): void => {
-    const findIndex = tasks.findIndex(t=>{
-      return t.id === taskId;
-    })
+    const updatedTasks: Task[] = tasks.filter((task) =>
+      task.id !== taskId
+    )
+    setTasks(updatedTasks)
   }
   return {
     completeTask,
