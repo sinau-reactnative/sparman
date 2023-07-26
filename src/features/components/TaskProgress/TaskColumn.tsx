@@ -6,10 +6,11 @@ import { TASK_MODAL_TYPE} from '../../../constants/app'
 
 interface TaskColumnProps {
   columnTitle: string
+  progressId: number
   tasks: Task[]
 }
 
-const TaskColumn = ({ columnTitle, tasks }: TaskColumnProps): JSX.Element => {
+const TaskColumn = ({ columnTitle,progressId, tasks }: TaskColumnProps): JSX.Element => {
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
@@ -28,19 +29,17 @@ const TaskColumn = ({ columnTitle, tasks }: TaskColumnProps): JSX.Element => {
       </div>
       <div>
         {tasks.map((task: Task) => {
-          console.log(task.progressOrder)
+          //console.log(task.progressOrder)
           return <TaskCard key={task.id} task={task} />
         })}
       </div>
       {isModalOpen && (
-        tasks.map((task: Task) => {
-          return <TaskModal
+        <TaskModal
           headingTitle="Add your task"
           type={TASK_MODAL_TYPE.ADD}
           setIsModalOpen={setIsModalOpen}
-          defaultProgressOrder={task.progressOrder}
-          />
-        })
+          defaultProgressOrder={progressId} 
+          selectedData={{} as Task}        />
       )}
     </div>
   )
