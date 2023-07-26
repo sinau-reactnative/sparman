@@ -83,7 +83,7 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
           >chevron_right</button>
         )}
       </div>
-      {isMenuOpen && <TaskMenu setIsMenuOpen={setIsMenuOpen} />}
+      {isMenuOpen && <TaskMenu setIsMenuOpen={setIsMenuOpen} task={task}/>}
     </div>
   )
 }

@@ -12,6 +12,8 @@ interface useTaskActionType {
     dueDate: string,
     progressOrder: number,
   ) => void
+  updateTask: (body: Task) => void
+  deleteTask: (taskId: number) => void 
 }
 
 export const useTasksAction = (): useTaskActionType => {
@@ -51,9 +53,21 @@ export const useTasksAction = (): useTaskActionType => {
     setTasks([...tasks, newTask])
   }
 
+  const updateTask = (body: Task): void => {
+    const updatedTasks: Task[] = tasks.map((task) => (task.id === body.id ? { ...body } : task))
+    setTasks(updatedTasks)
+  }
+
+  const deleteTask = (taskId: number): void => {
+    const findIndex = tasks.findIndex(t=>{
+      return t.id === taskId;
+    })
+  }
   return {
     completeTask,
     moveTaskCard,
     addTask,
+    updateTask,
+    deleteTask,
   }
 }   

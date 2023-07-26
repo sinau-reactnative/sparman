@@ -1,22 +1,25 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
-import type { CSSProperties } from '../../../types'
-import TaskModal from '../shared/TaskModal'
-import {TASK_PROGRESS_ID, TASK_MODAL_TYPE} from '../../../constants/app'
+import type { CSSProperties, Task } from '../../../types'
+import {TASK_MODAL_TYPE} from '../../../constants/app'
+import TaskModal from './TaskModal'
 
 
 interface TaskMenuProps {
   setIsMenuOpen: Dispatch<SetStateAction<boolean>>
+  task: Task
 }
 
 
-const TaskMenu = ({ setIsMenuOpen }: TaskMenuProps): JSX.Element => {
+const TaskMenu = ({ setIsMenuOpen, task }: TaskMenuProps): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [type, setType] = useState<string>(TASK_MODAL_TYPE.ADD)
   return (
     <div style={styles.menu}>
       <div 
       style={styles.menuItem}
       onClick={(): void => {
+        setType(TASK_MODAL_TYPE.EDIT)
         setIsModalOpen(true) // Ditambahkan
       }}
       >
@@ -35,11 +38,13 @@ const TaskMenu = ({ setIsMenuOpen }: TaskMenuProps): JSX.Element => {
         close
       </span>
       {isModalOpen && (<TaskModal
-          headingTitle="Edit your task"
-          type={TASK_MODAL_TYPE.EDIT}
-          setIsModalOpen={setIsModalOpen}
-          defaultProgressOrder={3}
-          />
+        headingTitle={type === TASK_MODAL_TYPE.ADD ? 'Add your task' : 'Edit your task'}
+        type={TASK_MODAL_TYPE.EDIT}
+        setIsModalOpen={setIsModalOpen}
+        defaultProgressOrder={task.progressOrder}
+        selectedData={task} 
+                
+        />
       )}
     </div>
   )

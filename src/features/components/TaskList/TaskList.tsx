@@ -43,8 +43,9 @@ const TaskList = (): JSX.Element => {
           headingTitle="Add your task"
           type={TASK_MODAL_TYPE.ADD}
           setIsModalOpen={setIsModalOpen}
-          defaultProgressOrder={TASK_PROGRESS_ID.NOT_STARTED}
-        />
+          defaultProgressOrder={TASK_PROGRESS_ID.NOT_STARTED} 
+          selectedData={{} as Task}
+          />
       )}
     </div>
   )
