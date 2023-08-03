@@ -18,41 +18,41 @@ const TaskMenu = ({ setIsMenuOpen, task }: TaskMenuProps): JSX.Element => {
   const {deleteTask} = useTasksAction()
   return (
     <div style={styles.menu}>
-      <div 
-      style={styles.menuItem}
-      onClick={(): void => {
-        setType(TASK_MODAL_TYPE.EDIT)
-        setIsModalOpen(true) // Ditambahkan
-      }}
-      >
-        <span className="material-icons">edit</span>Edit
-      </div>
-      <div 
-      style={styles.menuItem}
-      onClick={(): void => {
-        deleteTask(task.id) // Ditambahkan
-      }}
-      >
-        <span className="material-icons">delete</span>Delete
-      </div>
-      <span
-        className="material-icons"
-        style={styles.closeIcon}
+        <div 
+        style={styles.menuItem}
         onClick={(): void => {
-          setIsMenuOpen(false)
+          setType(TASK_MODAL_TYPE.EDIT)
+          setIsModalOpen(true) // Ditambahkan
         }}
-      >
-        close
-      </span>
-      {isModalOpen && (<TaskModal
-        headingTitle={type === TASK_MODAL_TYPE.ADD ? 'Add your task' : 'Edit your task'}
-        type={TASK_MODAL_TYPE.EDIT}
-        setIsModalOpen={setIsModalOpen}
-        defaultProgressOrder={task.progressOrder}
-        selectedData={task} 
-                
-        />
-      )}
+        >
+          <span className="material-icons">edit</span>Edit
+        </div>
+        <div 
+        style={styles.menuItem}
+        onClick={(): void => {
+          deleteTask(task.id) // Ditambahkan
+        }}
+        >
+          <span className="material-icons">delete</span>Delete
+        </div>
+        <span
+          className="material-icons"
+          style={styles.closeIcon}
+          onClick={(): void => {
+            setIsMenuOpen(false)
+          }}
+        >
+          close
+        </span>
+        {isModalOpen && (<TaskModal
+          headingTitle={type === TASK_MODAL_TYPE.ADD ? 'Add your task' : 'Edit your task'}
+          type={TASK_MODAL_TYPE.EDIT}
+          setIsModalOpen={setIsModalOpen}
+          defaultProgressOrder={task.progressOrder}
+          selectedData={task} 
+                  
+          />
+        )}
     </div>
   )
 }
