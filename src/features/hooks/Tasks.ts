@@ -14,6 +14,7 @@ interface useTaskActionType {
   ) => void
   updateTask: (body: Task) => void
   deleteTask: (taskId: number) => void 
+  // filterTask: (taskOrder: number, taskStatus: string) => void
 }
 
 export const useTasksAction = (): useTaskActionType => {
@@ -43,8 +44,9 @@ export const useTasksAction = (): useTaskActionType => {
     dueDate: string,
     progressOrder: number,
   ): void => {
+    const lastData = tasks[tasks.length-1]
     const newTask: Task = {
-      id: tasks.length + 1,
+      id: lastData.id+1,
       title,
       detail,
       dueDate,
@@ -64,6 +66,28 @@ export const useTasksAction = (): useTaskActionType => {
     )
     setTasks(updatedTasks)
   }
+
+  // const filterTask = (taskOrder : number, taskStatus : string): void => {
+  //   // console.log("FUNCTION FILTER COMPLETED CALLED")
+  //   if(taskStatus == "completed"){
+  //     const updatedTasks: Task[] = tasks.filter((task) =>
+  //      task.progressOrder == taskOrder
+  //   )
+  //   setTasks(updatedTasks)
+  //   } else if(taskStatus == "unCompleted"){
+  //     const updatedTasks: Task[] = tasks.filter((task) =>
+  //      task.progressOrder !== taskOrder 
+  //   )
+  //   setTasks(updatedTasks)
+  //   } else{
+  //     const updatedTasks: Task[] = tasks.filter(() =>
+  //     setTasks(updatedTasks)
+  //  )
+  //   }
+    
+    
+  // }
+
   return {
     completeTask,
     moveTaskCard,

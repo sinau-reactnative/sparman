@@ -46,7 +46,7 @@ const styles: CSSProperties = {
     backgroundColor: '#55ACC8',
     padding: '20px',
     minHeight: '100vh',
-    height: '100%',
+    // height: '100%',
   },
   link: {
     ...commonLinkStyles,
