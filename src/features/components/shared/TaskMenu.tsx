@@ -1,58 +1,57 @@
 import { useState } from 'react'
-import type { Dispatch, SetStateAction } from 'react'
 import type { CSSProperties, Task } from '../../../types'
-import {TASK_MODAL_TYPE} from '../../../constants/app'
+import { TASK_MODAL_TYPE } from '../../../constants/app'
 import TaskModal from './TaskModal'
 import { useTasksAction } from '../../hooks/Tasks'
-
+import { useGlobalAction } from '../../hooks/Global'
 
 interface TaskMenuProps {
-  setIsMenuOpen: Dispatch<SetStateAction<boolean>>
   task: Task
 }
 
-
-const TaskMenu = ({ setIsMenuOpen, task }: TaskMenuProps): JSX.Element => {
+const TaskMenu = ({ task }: TaskMenuProps): JSX.Element => {
+  const { updateMenu } = useGlobalAction()
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [type, setType] = useState<string>(TASK_MODAL_TYPE.ADD)
-  const {deleteTask} = useTasksAction()
+  const { deleteTask } = useTasksAction()
+
   return (
     <div style={styles.menu}>
-        <div 
+      <div
         style={styles.menuItem}
         onClick={(): void => {
           setType(TASK_MODAL_TYPE.EDIT)
           setIsModalOpen(true) // Ditambahkan
         }}
-        >
-          <span className="material-icons">edit</span>Edit
-        </div>
-        <div 
+      >
+        <span className="material-icons">edit</span>Edit
+      </div>
+      <div
         style={styles.menuItem}
         onClick={(): void => {
           deleteTask(task.id) // Ditambahkan
         }}
-        >
-          <span className="material-icons">delete</span>Delete
-        </div>
-        <span
-          className="material-icons"
-          style={styles.closeIcon}
-          onClick={(): void => {
-            setIsMenuOpen(false)
-          }}
-        >
-          close
-        </span>
-        {isModalOpen && (<TaskModal
+      >
+        <span className="material-icons">delete</span>Delete
+      </div>
+      <span
+        className="material-icons"
+        style={styles.closeIcon}
+        onClick={(): void => {
+          updateMenu(0)
+        }}
+      >
+        close
+      </span>
+      {isModalOpen && (
+        <TaskModal
           headingTitle={type === TASK_MODAL_TYPE.ADD ? 'Add your task' : 'Edit your task'}
           type={TASK_MODAL_TYPE.EDIT}
           setIsModalOpen={setIsModalOpen}
           defaultProgressOrder={task.progressOrder}
-          selectedData={task} 
-                  
-          />
-        )}
+          selectedData={task}
+        />
+      )}
     </div>
   )
 }

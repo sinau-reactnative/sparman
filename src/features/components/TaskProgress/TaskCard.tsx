@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import type { Task, CSSProperties } from '../../../types'
-import {TASK_PROGRESS_ID} from '../../../constants/app'
-import {useTasksAction} from '../../hooks/Tasks'
+import { TASK_PROGRESS_ID } from '../../../constants/app'
+import { useTasksAction } from '../../hooks/Tasks'
 //import TaskModal from '../shared/TaskModal'
 import TaskMenu from '../shared/TaskMenu'
-
+import { useGlobalAction } from '../../hooks/Global'
+import { useRecoilValue } from 'recoil'
+import { menuState } from '../../GlobalAtom'
 
 interface TaskCardProps {
   task: Task
@@ -26,9 +28,7 @@ const getIconStyle = (progressOrder: number): React.CSSProperties => {
 
 const getArrowPositionStyle = (progressOrder: number): React.CSSProperties => {
   const justifyContentValue: 'flex-end' | 'space-between' =
-    progressOrder === TASK_PROGRESS_ID.NOT_STARTED 
-    ? 'flex-end' 
-    : 'space-between'
+    progressOrder === TASK_PROGRESS_ID.NOT_STARTED ? 'flex-end' : 'space-between'
   return {
     display: 'flex',
     justifyContent: justifyContentValue,
@@ -36,27 +36,29 @@ const getArrowPositionStyle = (progressOrder: number): React.CSSProperties => {
 }
 
 const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
-  const {completeTask,moveTaskCard} = useTasksAction()
-  //const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
+  const { completeTask, moveTaskCard } = useTasksAction()
+  const { updateMenu } = useGlobalAction()
+  const menu = useRecoilValue(menuState)
 
   return (
     <div style={styles.taskCard}>
       <div style={styles.taskIcons}>
-        <div 
-        className="material-icons"
-        style={getIconStyle(task.progressOrder)}
-        onClick={(): void => {
-          completeTask(task.id)
-        }}
-        >check_circle</div>
-        <div 
-        className="material-icons" 
-        style={styles.menuIcon}
-        onClick={(): void => {
-          setIsMenuOpen(true) // Ditambahkan
-        }}
-      >
+        <div
+          className="material-icons"
+          style={getIconStyle(task.progressOrder)}
+          onClick={(): void => {
+            completeTask(task.id)
+          }}
+        >
+          check_circle
+        </div>
+        <div
+          className="material-icons"
+          style={styles.menuIcon}
+          onClick={(): void => {
+            updateMenu(task.id)
+          }}
+        >
           more_vert
         </div>
       </div>
@@ -69,21 +71,27 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
       </div>
       <div style={getArrowPositionStyle(task.progressOrder)}>
         {task.progressOrder !== TASK_PROGRESS_ID.NOT_STARTED && (
-          <button className="material-icons"
-          onClick={(): void => {
-            moveTaskCard(task.id, -1 )
-          }}
-          >chevron_left</button>
+          <button
+            className="material-icons"
+            onClick={(): void => {
+              moveTaskCard(task.id, -1)
+            }}
+          >
+            chevron_left
+          </button>
         )}
         {task.progressOrder !== TASK_PROGRESS_ID.COMPLETED && (
-          <button className="material-icons"
-          onClick={(): void => {
-            moveTaskCard(task.id, 1 )
-          }}
-          >chevron_right</button>
+          <button
+            className="material-icons"
+            onClick={(): void => {
+              moveTaskCard(task.id, 1)
+            }}
+          >
+            chevron_right
+          </button>
         )}
       </div>
-      {isMenuOpen && <TaskMenu setIsMenuOpen={setIsMenuOpen} task={task}/>}
+      {menu.menuOpenId === task.id && <TaskMenu task={task} />}
     </div>
   )
 }
